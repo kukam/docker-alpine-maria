@@ -67,3 +67,6 @@ EOF
 	/usr/bin/mysqld --user=mysql --bootstrap --verbose=0 < $tfile
 	rm -f $tfile
 fi
+
+echo '[i] start running mysqld'
+exec /usr/bin/mysqld --user=mysql --console
