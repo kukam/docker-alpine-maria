@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # parameters
-MYSQL_ROOT_PWD=${MYSQL_ROOT_PWD:-"mysql"}
+MYSQL_ADMIN_PWD=${MYSQL_ADMIN_PWD:-"mysql"}
 MYSQL_USER=${MYSQL_USER:-""}
 MYSQL_USER_PWD=${MYSQL_USER_PWD:-""}
 MYSQL_USER_DB=${MYSQL_USER_DB:-""}
@@ -23,7 +23,7 @@ else
 	mysql_install_db --user=mysql > /dev/null
 	echo 'Database initialized'
 
-	echo "[i] MySql root password: $MYSQL_ROOT_PWD"
+	echo "[i] MySql root password: $MYSQL_ADMIN_PWD"
 
 	# create temp file
 	tfile=`mktemp`
@@ -37,8 +37,8 @@ else
 USE mysql;
 FLUSH PRIVILEGES;
 DELETE FROM mysql.user;
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PWD' WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$MYSQL_ROOT_PWD' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$MYSQL_ADMIN_PWD' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$MYSQL_ADMIN_PWD' WITH GRANT OPTION;
 EOF
 
 
