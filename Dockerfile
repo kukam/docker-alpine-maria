@@ -9,9 +9,10 @@ RUN apk --no-cache add --update mysql mysql-client bash && \
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-EXPOSE 7775
+ENV DBPORT 7775
+EXPOSE ${DBPORT}
 VOLUME ["/var/lib/mysql"]
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-CMD ["/usr/bin/mysqld", "--user=mysql", "--port=7775", "--console"]
+CMD ["/usr/bin/mysqld", "--user=mysql", "--port=${DBPORT}", "--console"]
