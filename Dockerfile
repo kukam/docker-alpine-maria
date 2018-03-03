@@ -9,7 +9,7 @@ RUN apk --no-cache add --update mysql mysql-client bash && \
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-EXPOSE 3306
+EXPOSE 7775
 VOLUME ["/var/lib/mysql"]
 
 ENTRYPOINT ["/entrypoint.sh"]
