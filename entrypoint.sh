@@ -6,15 +6,12 @@
 : ${DB_USER_PASSWORD:-"pwe"}
 : ${DB_ADMIN_PASSWORD:-"mysql"}
 
-mkdir -p ${DBHOME}
-chown -R mysql ${DBHOME}
-
 if [ ! -d "/run/mysqld" ]; then
 	mkdir -p /run/mysqld
 	chown -R mysql:mysql /run/mysqld
 fi
 
-if [ ! -z "$(ls -A ${DBHOME})" ]; then
+if [ ! -z "$(ls -A "${DBHOME"})" ]; then
 	echo '[i] MySQL directory already present, skipping creation'
 else
 	echo "[i] MySQL data directory not found, creating initial DBs"
