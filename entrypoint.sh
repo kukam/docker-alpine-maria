@@ -68,5 +68,4 @@ EOF
 	rm -f $tfile
 fi
 
-echo '[i] start running mysqld'
-exec /usr/bin/mysqld --user=mysql --console
+exec "$@"
