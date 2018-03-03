@@ -6,23 +6,21 @@
 : ${DB_USER_PASSWORD:-"pwe"}
 : ${DB_ADMIN_PASSWORD:-"mysql"}
 
-mkdir -p "${DBHOME}"
-
 if [ ! -d "/run/mysqld" ]; then
 	mkdir -p /run/mysqld
 	chown -R mysql:mysql /run/mysqld
 fi
 
-if [ ! -z "$(ls -A "${DBHOME}")" ]; then
+if [ ! -z "$(ls -A "${DATADIR}")" ]; then
 	echo '[i] MySQL directory already present, skipping creation'
 else
 	echo "[i] MySQL data directory not found, creating initial DBs"
 
-	chown -R mysql:mysql "${DBHOME}"
+	chown -R mysql:mysql "${DATADIR}"
 
 	# init database
 	echo "Initializing database mysql_install_db --user=mysql --basedir=${DBHOME}"
-	mysql_install_db --user=mysql --basedir=${DBHOME} > /dev/null
+	mysql_install_db --user=mysql --datadir=${DATADIR} > /dev/null
 	echo 'Database initialized'
 
 	echo "[i] MySql root password: $DB_ADMIN_PASSWORD"
