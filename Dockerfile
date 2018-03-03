@@ -10,10 +10,10 @@ RUN apk --no-cache add --update mysql mysql-client bash \
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-ENV DBHOME /dbhome
+ENV DATADIR /dbhome
 ENV DBPORT 7775
 EXPOSE ${DBPORT}
-VOLUME ${DBHOME}
+VOLUME ${DATADIR}
 
 ENTRYPOINT ["/entrypoint.sh"]
 
