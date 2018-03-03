@@ -15,4 +15,4 @@ VOLUME ["/var/lib/mysql"]
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-CMD ["/usr/bin/mysqld", "--user=mysql", "--port=${DBPORT}", "--console"]
+CMD ["/usr/bin/mysqld", "--user=mysql", "--port=7775", "--console"]
