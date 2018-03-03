@@ -14,7 +14,7 @@ if [ ! -d "/run/mysqld" ]; then
 	chown -R mysql:mysql /run/mysqld
 fi
 
-if [ -d ${DBHOME} ]; then
+if [ ! -z "$(ls -A ${DBHOME})" ]; then
 	echo '[i] MySQL directory already present, skipping creation'
 else
 	echo "[i] MySQL data directory not found, creating initial DBs"
