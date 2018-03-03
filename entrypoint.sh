@@ -21,7 +21,7 @@ else
 	chown -R mysql:mysql "${DBHOME}"
 
 	# init database
-	echo 'Initializing database'
+	echo "Initializing database mysql_install_db --user=mysql --basedir=${DBHOME}"
 	mysql_install_db --user=mysql --basedir=${DBHOME} > /dev/null
 	echo 'Database initialized'
 
