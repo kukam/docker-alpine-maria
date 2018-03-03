@@ -19,7 +19,7 @@ else
 	chown -R mysql:mysql "${DATADIR}"
 
 	# init database
-	echo "Initializing database mysql_install_db --user=mysql --basedir=${DBHOME}"
+	echo "Initializing database"
 	mysql_install_db --user=mysql --datadir=${DATADIR} > /dev/null
 	echo 'Database initialized'
 
