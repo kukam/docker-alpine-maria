@@ -6,6 +6,9 @@
 : ${DB_USER_PASSWORD:-"pwe"}
 : ${DB_ADMIN_PASSWORD:-"mysql"}
 
+mkdir -p ${DBHOME}
+chown -R mysql ${DBHOME}
+
 if [ ! -d "/run/mysqld" ]; then
 	mkdir -p /run/mysqld
 	chown -R mysql:mysql /run/mysqld
