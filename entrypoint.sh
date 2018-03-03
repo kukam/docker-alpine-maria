@@ -11,12 +11,12 @@ if [ ! -d "/run/mysqld" ]; then
 	chown -R mysql:mysql /run/mysqld
 fi
 
-if [ -d /var/lib/mysql/mysql ]; then
+if [ -d ${DBHOME} ]; then
 	echo '[i] MySQL directory already present, skipping creation'
 else
 	echo "[i] MySQL data directory not found, creating initial DBs"
 
-	chown -R mysql:mysql /var/lib/mysql
+	chown -R mysql:mysql ${DBHOME}
 
 	# init database
 	echo 'Initializing database'
