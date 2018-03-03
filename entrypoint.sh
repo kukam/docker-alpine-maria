@@ -1,10 +1,10 @@
 #!/bin/sh
 
 # parameters
-MYSQL_ADMIN_PWD=${MYSQL_ADMIN_PWD:-"mysql"}
-MYSQL_USER=${MYSQL_USER:-""}
-MYSQL_USER_PWD=${MYSQL_USER_PWD:-""}
-MYSQL_USER_DB=${MYSQL_USER_DB:-""}
+MYSQL_ADMIN_PWD=${DB_ADMIN_PASSWORD:-"mysql"}
+MYSQL_USER=${DB_USER:-""}
+MYSQL_USER_PWD=${DB_USER_PASSWORD:-""}
+MYSQL_USER_DB=${DB_NAME:-""}
 
 if [ ! -d "/run/mysqld" ]; then
 	mkdir -p /run/mysqld
