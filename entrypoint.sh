@@ -1,10 +1,10 @@
 #!/bin/sh
 
 # parameters
-MYSQL_ADMIN_PWD=${DB_ADMIN_PASSWORD:-"mysql"}
-MYSQL_USER=${DB_USER:-""}
-MYSQL_USER_PWD=${DB_USER_PASSWORD:-""}
-MYSQL_USER_DB=${DB_NAME:-""}
+: ${DB_NAME:-"pwe"}
+: ${DB_USER:-"pwe"}
+: ${DB_USER_PASSWORD:-"pwe"}
+: ${DB_ADMIN_PASSWORD:-"mysql"}
 
 if [ ! -d "/run/mysqld" ]; then
 	mkdir -p /run/mysqld
@@ -23,7 +23,7 @@ else
 	mysql_install_db --user=mysql > /dev/null
 	echo 'Database initialized'
 
-	echo "[i] MySql root password: $MYSQL_ADMIN_PWD"
+	echo "[i] MySql root password: $DB_ADMIN_PASSWORD"
 
 	# create temp file
 	tfile=`mktemp`
@@ -33,30 +33,21 @@ else
 
 	# save sql
 	echo "[i] Create temp file: $tfile"
-	cat << EOF > $tfile
-USE mysql;
-FLUSH PRIVILEGES;
-DELETE FROM mysql.user;
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$MYSQL_ADMIN_PWD' WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$MYSQL_ADMIN_PWD' WITH GRANT OPTION;
-EOF
-
+	echo "USE mysql;" >> $tfile
+	echo "FLUSH PRIVILEGES;" >> $tfile
+	echo "DELETE FROM mysql.user;" >> $tfile
+	echo "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$DB_ADMIN_PASSWORD' WITH GRANT OPTION;" >> $tfile
+	echo "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$DB_ADMIN_PASSWORD' WITH GRANT OPTION;" >> $tfile
 
 	# Create new database
-	if [ "$MYSQL_USER_DB" != "" ]; then
-		echo "[i] Creating database: $MYSQL_USER_DB"
-		echo "CREATE DATABASE IF NOT EXISTS \`$MYSQL_USER_DB\` CHARACTER SET utf8 COLLATE utf8_general_ci;" >> $tfile
+	if [ "$DB_NAME" != "" ]; then
+		echo "[i] Creating database: $DB_NAME"
+		echo "CREATE DATABASE IF NOT EXISTS \`$DB_NAME\` CHARACTER SET utf8 COLLATE utf8_general_ci;" >> $tfile
 
 		# set new User and Password
-		if [ "$MYSQL_USER" != "" ] && [ "$MYSQL_USER_PWD" != "" ]; then
-		echo "[i] Creating user: $MYSQL_USER with password $MYSQL_USER_PWD"
-		echo "GRANT ALL ON \`$MYSQL_USER_DB\`.* to '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_USER_PWD';" >> $tfile
-		fi
-	else
-		# don`t need to create new database,Set new User to control all database.
-		if [ "$MYSQL_USER" != "" ] && [ "$MYSQL_USER_PWD" != "" ]; then
-		echo "[i] Creating user: $MYSQL_USER with password $MYSQL_USER_PWD"
-		echo "GRANT ALL ON *.* to '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_USER_PWD';" >> $tfile
+		if [ "$DB_USER" != "" ] && [ "$DB_USER_PASSWORD" != "" ]; then
+		echo "[i] Creating user: $DB_USER with password $DB_USER_PASSWORD"
+		echo "GRANT ALL ON \`$DB_NAME\`.* to '$DB_USER'@'%' IDENTIFIED BY '$DB_USER_PASSWORD';" >> $tfile
 		fi
 	fi
 
