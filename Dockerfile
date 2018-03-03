@@ -17,4 +17,4 @@ VOLUME ${DATADIR}
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-CMD ["/usr/bin/mysqld", "--user=mysql", "--basedir=/dbhome", "--port=7775", "--console"]
+CMD ["/usr/bin/mysqld", "--user=mysql", "--datadir=/dbhome", "--port=7775", "--console"]
